@@ -1,0 +1,16 @@
+Terminator = CR LF;
+
+writeIntCommand {
+	out "\$1 %d";
+	in "\$1 %d";
+}
+
+writeCommand {
+	out "\$1";
+	in "\$1";
+}
+
+writeFilter {
+	out "FLTT %(A)d;HFREQ %(B)d;LFREQ %(C)d";
+	in "FLTT %(A)d;HFREQ %(B)d;LFREQ %(C)d";
+}

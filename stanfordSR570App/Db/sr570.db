@@ -1,0 +1,360 @@
+record(bo, "$(Sys)$(Dev)Cmd:Write-Cmd"){
+	field(FLNK, "$(Sys)$(Dev)FOut_")
+}
+
+record(fanout, "$(Sys)$(Dev)FOut_"){
+	field(LNK1, "$(Sys)$(Dev)FOut:1_")
+	field(LNK2, "$(Sys)$(Dev)FOut:2_")
+	field(LNK3, "$(Sys)$(Dev)FOut:3_")
+}
+
+record(fanout, "$(Sys)$(Dev)FOut:1_"){
+	field(LNK1, "$(Sys)$(Dev)Gain-SP_")
+	field(LNK2, "$(Sys)$(Dev)Mode:Cal-Sel")
+	field(LNK3, "$(Sys)$(Dev)Gain:Fine-SP")
+	field(LNK4, "$(Sys)$(Dev)Offset-Sel")
+	field(LNK5, "$(Sys)$(Dev)Offset-SP_")
+	field(LNK6, "$(Sys)$(Dev)Offset:Fine-SP_")
+}
+
+record(fanout, "$(Sys)$(Dev)FOut:2_"){
+	field(LNK1, "$(Sys)$(Dev)Offset:Cal-Sel")
+	field(LNK2, "$(Sys)$(Dev)Bias-Sel")
+	field(LNK3, "$(Sys)$(Dev)Bias-SP_")
+	field(LNK4, "$(Sys)$(Dev)Filter-Sel")
+	field(LNK5, "$(Sys)$(Dev)Filter:High-Sel")
+	field(LNK6, "$(Sys)$(Dev)Filter:Low-Sel")
+}
+
+record(fanout, "$(Sys)$(Dev)FOut:3_"){
+	field(LNK1, "$(Sys)$(Dev)Mode:Gain-Sel")
+	field(LNK2, "$(Sys)$(Dev)Out:Invert-Sel")
+	field(LNK3, "$(Sys)$(Dev)Out:Blank-Sel")
+}
+
+record(mbbo, "$(Sys)$(Dev)Gain:Decade-SP"){
+	field(ZRST, "1 pA/V")
+	field(ONST, "10 pA/V")
+	field(TWST, "100 pA/V")
+	field(THST, "1 nA/V")
+	field(FRST, "10 nA/V")
+	field(FVST, "100 nA/V")
+	field(SXST, "1 uA/V")
+	field(SVST, "10 uA/V")
+	field(EIST, "100 uA/V")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(FLNK, "$(Sys)$(Dev)Gain-SP_")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(Sys)$(Dev)Gain:Val-SP"){
+	field(ZRST, "1")
+	field(ONST, "2")
+	field(TWST, "5")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(FLNK, "$(Sys)$(Dev)Gain-SP_")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(calcout, "$(Sys)$(Dev)Gain-SP_"){
+	field(DTYP, "stream")
+	field(INPA, "$(Sys)$(Dev)Gain:Decade-SP NPP MS")
+	field(INPB, "$(Sys)$(Dev)Gain:Val-SP NPP MS")
+	field(CALC, "(A*3)+B")
+	field(OUT,  "@sr570.proto writeIntCommand(SENS) $(PORT)")
+}
+
+record(bo, "$(Sys)$(Dev)Mode:Cal-Sel"){
+	field(ONAM, "ON")
+	field(ZNAM, "OFF")
+	field(OUT,  "@sr570.proto writeIntCommand(SUCM) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(ao, "$(Sys)$(Dev)Gain:Fine-SP"){
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(SUCV) $(PORT)")
+	field(DRVH, "100")
+	field(DRVL, "0")
+	field(PINI, "1")
+	field(PREC, "1")
+    info(autosaveFields, "VAL")
+}
+
+
+record(bo, "$(Sys)$(Dev)Offset-Sel"){
+	field(ONAM, "ON")
+	field(ZNAM, "OFF")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(IOON) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(Sys)$(Dev)Offset:Decade-SP"){
+	field(ZRST, "1 pA")
+	field(ONST, "10 pA")
+	field(TWST, "100 pA")
+	field(THST, "1 nA")
+	field(FRST, "10 nA")
+	field(FVST, "100 nA")
+	field(SXST, "1 uA")
+	field(SVST, "10 uA")
+	field(EIST, "100 uA")
+	field(NIST, "1 mA")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(FLNK, "$(Sys)$(Dev)Offset-SP_")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(Sys)$(Dev)Offset:Val-SP"){
+	field(ZRST, "1")
+	field(ONST, "2")
+	field(TWST, "5")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(FLNK, "$(Sys)$(Dev)Offset-SP_")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(calcout, "$(Sys)$(Dev)Offset-SP_"){
+	field(DTYP, "stream")
+	field(INPA, "$(Sys)$(Dev)Offset:Decade-SP NPP MS")
+	field(INPB, "$(Sys)$(Dev)Offset:Val-SP NPP MS")
+	field(CALC, "(A*3)+B")
+	field(OUT,  "@sr570.proto writeIntCommand(IOLV) $(PORT)")
+}
+
+record(ao, "$(Sys)$(Dev)Offset:Fine-SP"){
+	field(DRVH, "100")
+	field(DRVL, "-100")
+	field(PREC, "1")
+	field(FLNK, "$(Sys)$(Dev)Offset:Fine-SP_")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(calcout, "$(Sys)$(Dev)Offset:Fine-SP_"){
+	field(INPA, "$(Sys)$(Dev)Offset:Fine-SP NPP MS")
+	field(CALC, "A*10")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(IOUV) $(PORT)")
+}
+
+record(bo, "$(Sys)$(Dev)Offset:Cal-Sel"){
+	field(ONAM, "ON")
+	field(ZNAM, "OFF")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(IOUC) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(Sys)$(Dev)Offset:Sign-Sel"){
+	field(ZNAM, "Negative")
+	field(ONAM, "Positive")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(IOSN) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(Sys)$(Dev)Bias-Sel"){
+	field(ONAM, "ON")
+	field(ZNAM, "OFF")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(BSON) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(ao, "$(Sys)$(Dev)Bias-SP"){
+	field(DRVH, "5")
+	field(DRVL, "-5")
+	field(FLNK, "$(Sys)$(Dev)Bias-SP_")
+	field(PINI, "1")
+	field(PREC, "3")
+    info(autosaveFields, "VAL")
+	
+}
+
+record(calcout, "$(Sys)$(Dev)Bias-SP_"){
+	field(INPA, "$(Sys)$(Dev)Bias-SP NPP MS")
+	field(CALC, "A*1000")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(BSLV) $(PORT)")
+}
+
+record(mbbo, "$(Sys)$(Dev)Filter-Sel"){
+	field(ZRST, "6 dB highpass")
+	field(ONST, "12 dB highpass")
+	field(TWST, "6 dB bandpass")
+	field(THST, "6 dB lowpass")
+	field(FRST, "12 dB lowpass")
+	field(FVST, "none")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(PINI, "1")
+	field(FLNK, "$(Sys)$(Dev)Filter-Sel_")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(Sys)$(Dev)Filter:Low-Sel"){
+	field(ZRST, "0.03 Hz")
+	field(ONST, "0.1 Hz")
+	field(TWST, "0.3 Hz")
+	field(THST, "1 Hz")
+	field(FRST, "3 Hz")
+	field(FVST, "10 Hz")
+	field(SXST, "30 Hz")
+	field(SVST, "100 Hz")
+	field(EIST, "300 Hz")
+	field(NIST, "1 kHz")
+	field(TEST, "3 kHz")
+	field(ELST, "10 kHz")
+	field(TVST, "30 kHz")
+	field(TTST, "100 kHz")
+	field(FTST, "300 kHz")
+	field(FFST, "1 MHz")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+	field(TVVL, "12")
+	field(TTVL, "13")
+	field(FTVL, "14")
+	field(FFVL, "15")
+	field(PINI, "1")
+	field(FLNK, "$(Sys)$(Dev)Filter-Sel_")
+    info(autosaveFields, "VAL")
+}
+
+record(mbbo, "$(Sys)$(Dev)Filter:High-Sel"){
+	field(ZRST, "0.03 Hz")
+	field(ONST, "0.1 Hz")
+	field(TWST, "0.3 Hz")
+	field(THST, "1 Hz")
+	field(FRST, "3 Hz")
+	field(FVST, "10 Hz")
+	field(SXST, "30 Hz")
+	field(SVST, "100 Hz")
+	field(EIST, "300 Hz")
+	field(NIST, "1 kHz")
+	field(TEST, "3 kHz")
+	field(ELST, "10 kHz")
+	field(TVST, "30 kHz")
+	field(TTST, "100 kHz")
+	field(FTST, "300 kHz")
+	field(FFST, "1 MHz")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+	field(TVVL, "12")
+	field(TTVL, "13")
+	field(FTVL, "14")
+	field(FFVL, "15")
+	field(PINI, "1")
+	field(FLNK, "$(Sys)$(Dev)Filter-Sel_")
+    info(autosaveFields, "VAL")
+}
+
+record(calcout, "$(Sys)$(Dev)Filter-Sel_"){
+	field(INPA, "$(Sys)$(Dev)Filter-Sel NPP MS")
+	field(INPB, "$(Sys)$(Dev)Filter:Low-Sel NPP MS")
+	field(INPC, "$(Sys)$(Dev)Filter:High-Sel NPP MS")
+	field(CALC, "1")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeFilter $(PORT)")
+}
+
+record(mbbo, "$(Sys)$(Dev)Mode:Gain-Sel"){
+	field(ZRST, "Low Noise")
+	field(ONST, "High Bandwidth")
+	field(TWST, "Low Drift")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(GNMD) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(Sys)$(Dev)Out:Invert-Sel"){
+	field(ZNAM, "Non Inverted")
+	field(ONAM, "Inverted")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(INVT) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(Sys)$(Dev)Out:Blank-Sel"){
+	field(ZNAM, "No Blank")
+	field(ONAM, "Blank")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeIntCommand(BLNK) $(PORT)")
+	field(PINI, "1")
+    info(autosaveFields, "VAL")
+}
+
+record(bo, "$(Sys)$(Dev)Rst:All-Cmd"){
+	field(ONAM, "RESET")
+	field(ZNAM, "OK")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeCommand(*RST) $(PORT)")
+}
+
+record(bo, "$(Sys)$(Dev)Rst:Filter-Cmd"){
+	field(ONAM, "RESET")
+	field(ZNAM, "OK")
+	field(DTYP, "stream")
+	field(OUT,  "@sr570.proto writeCommand(ROLD) $(PORT)")
+}
+
