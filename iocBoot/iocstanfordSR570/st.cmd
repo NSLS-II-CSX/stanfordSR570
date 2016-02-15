@@ -14,15 +14,15 @@ dbLoadDatabase("$(TOP)/dbd/stanfordSR570.dbd",0,0)
 stanfordSR570_registerRecordDeviceDriver(pdbbase) 
 
 drvAsynIPPortConfigure("P1", "10.23.2.63:4001")
-asynSetTraceMask("P1", 0, 0x9)
-asynSetTraceIOMask("P1", 0, 0x2)
+#asynSetTraceMask("P1", 0, 0x9)
+#asynSetTraceIOMask("P1", 0, 0x2)
 drvAsynIPPortConfigure("P2", "10.23.2.63:4002")
 #asynSetTraceMask("P2", 0, 0x9)
 #asynSetTraceIOMask("P2", 0, 0x2)
 
 ## Load record instances
 dbLoadRecords("$(TOP)/db/sr570.db","Sys=XF:23ID1-ES,Dev={CurrAmp:1},PORT=P1")
-#dbLoadRecords("$(TOP)/db/sr570.db","Sys=XF:23ID1-ES,Dev={CurrAmp:2},PORT=P2")
+dbLoadRecords("$(TOP)/db/sr570.db","Sys=XF:23ID1-ES,Dev={CurrAmp:2},PORT=P2")
 
 
 system("install -m 777 -d $(TOP)/as/save") 
